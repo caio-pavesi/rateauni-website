@@ -6,6 +6,7 @@
             "type": "shell",
             "dependsOn": [
                 "Configurar VENV",
+                "Criar arquivo ENV",
             ],
             "dependsOrder": "sequence",
             "group": {
@@ -18,6 +19,12 @@
             "type": "shell",
             "windows": {"command": "python -m venv .venv; .venv/Scripts/activate; python -m pip install --upgrade pip; pip install -r requirements.txt"},
             "osx": {"command": "python3 -m venv .venv; source .venv/bin/activate; python3 -m pip install --upgrade pip; pip3 install -r requirements.txt"}
+        },
+        {
+            "label": "Criar arquivo ENV",
+            "type": "shell",
+            "windows": {"command": "New-Item -Path .env -ItemType file -Force"},
+            "osx": {"command": "touch .env"}
         },
     ]
 }
