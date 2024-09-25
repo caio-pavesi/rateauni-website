@@ -30,7 +30,7 @@ DEBUG = config("DJANGO_DEBUG", cast = bool)
 
 ALLOWED_HOSTS = [
     "127.0.0.1",
-    ".vercel.app",
+    ".vercel.app", # ! - Do not remove (Vercel configuration), see references in docs
 ]
 
 
@@ -74,7 +74,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "api.wsgi.app"
+WSGI_APPLICATION = "api.wsgi.app" # ! - Leave as 'app' (Vercel configuration), see references in docs
 
 
 # Database
