@@ -1,13 +1,15 @@
 """Database models for the rates app"""
 
+import uuid
 from django.db import models
 
 class Rates(models.Model):
     """Represents a rate in the database"""
 
-    rate_id = models.IntegerField(
+    rate_id = models.UUIDField(
         verbose_name = "rate_id",
         primary_key = True,
+        default = uuid.uuid4,
         help_text = "Unique identifier for the rate",
     )
     rate_date = models.DateTimeField(
@@ -19,6 +21,11 @@ class Rates(models.Model):
         verbose_name = "rate_email",
         max_length = 255,
         help_text = "Email of the user who rated, 'Anonymous' if skipped validation",
+    )
+    rate_validated = models.BooleanField(
+        verbose_name = "rate_validated",
+        default = False,
+        help_text = "If the email was validated or not, see the user flow diagram",
     )
     rate_university_id = models.ForeignKey(
         to = "Universities",
@@ -45,7 +52,7 @@ class Universities(models.Model):
     university_campus = models.CharField(
         verbose_name = "university_campus",
         max_length = 255,
-        help_text = "Campus of the university",
+        help_text = "Campus of the university, a university can have campuses in different cities or different places of the city",
     )
     university_country = models.CharField(
         verbose_name = "university_country",
