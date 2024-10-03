@@ -27,9 +27,10 @@ class Rates(models.Model):
         default = False,
         help_text = "If the email was validated or not, see the user flow diagram",
     )
-    rate_university_id = models.ForeignKey(
-        to = "Universities",
-        on_delete = models.CASCADE,
+    rate_campus_id = models.ForeignKey(
+        verbose_name = "rate_campus_id",
+        to = "Campuses",
+        on_delete = models.DO_NOTHING,
     )
     rate_value = models.IntegerField(
         verbose_name = "rate_value",
@@ -49,23 +50,48 @@ class Universities(models.Model):
         max_length = 255,
         help_text = "Name of the university",
     )
-    university_campus = models.CharField(
-        verbose_name = "university_campus",
+    university_website = models.CharField(
+        verbose_name = "university_website",
         max_length = 255,
-        help_text = "Campus of the university, a university can have campuses in different cities or different places of the city",
+        help_text = "Url of the university website",
     )
-    university_country = models.CharField(
-        verbose_name = "university_country",
-        max_length = 255,
-        help_text = "Country of the university",
+
+class Campuses(models.Model):
+    """Represent a university campus"""
+
+    campus_id = models.IntegerField(
+        verbose_name = "campus_id",
+        primary_key = True,
+        help_text = "Unique identifier for the campus",
     )
-    university_state = models.CharField(
-        verbose_name = "university_state",
-        max_length = 255,
-        help_text = "State of the university",
+    campus_university_id = models.ForeignKey(
+        verbose_name = "campus_university_id",
+        to = "Universities",
+        on_delete = models.CASCADE,
     )
-    university_city = models.CharField(
-        verbose_name = "university_city",
+    campus_name = models.CharField(
+        verbose_name = "campus_name",
         max_length = 255,
-        help_text = "City of the university",
+        help_text = (
+            "Name of the campus, if it own only one campus it "
+            "should be null, filled if more than one exists"
+        ),
+    )
+    campus_country = models.CharField(
+        verbose_name = "campus_country",
+        max_length = 255,
+        help_text = (
+            "Country of the campus in ISO 3166-1 name format, "
+            "see more in https://en.wikipedia.org/wiki/ISO_3166-1"
+        ),
+    )
+    campus_state = models.CharField(
+        verbose_name = "campus_state",
+        max_length = 255,
+        help_text = "State of the campus",
+    )
+    campus_city = models.CharField(
+        verbose_name = "campus_city",
+        max_length = 255,
+        help_text = "City of the campus",
     )
